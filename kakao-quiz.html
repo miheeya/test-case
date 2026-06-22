@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>카카오 접근성 OX 퀴즈</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'KakaoFont';
+            src: url('https://t1.kakaocdn.net/kakao_font/KakaoFont.woff2') format('woff2'),
+                 url('https://t1.kakaocdn.net/kakao_font/KakaoFont.woff') format('woff');
+            font-weight: 400;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'KakaoFont';
+            src: url('https://t1.kakaocdn.net/kakao_font/KakaoFontBold.woff2') format('woff2'),
+                 url('https://t1.kakaocdn.net/kakao_font/KakaoFontBold.woff') format('woff');
+            font-weight: 700 900;
+            font-display: swap;
+        }
+
+        *, *::before, *::after {
+            margin: 0; padding: 0; box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+        }
+
+        body {
+            font-family: 'KakaoFont', 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+            background: #FFEB00;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ── HEADER ── */
+        .site-header {
+            display: flex;
+            align-items: center;
+            padding: 18px 32px 14px;
+            flex-shrink: 0;
+        }
+        .header-brand {
+            flex: 1;
+            font-size: 20px;
+            font-weight: 400;
+            color: #3A3A3A;
+            letter-spacing: -0.3px;
+        }
+        .header-brand b { font-weight: 900; }
+        .home-btn {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.10);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            touch-action: manipulation;
+            flex-shrink: 0;
+            transition: background 0.12s;
+        }
+        .home-btn:active { background: rgba(0,0,0,0.20); }
+        .header-divider { height: 3px; background: #E8572E; flex-shrink: 0; }
+
+        /* ── SCREENS ── */
+        .screen { display: none; flex-direction: column; flex: 1; min-height: 0; }
+        .screen.active { display: flex; }
+
+        /* ── TITLE SCREEN ── */
+        .title-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 32px;
+        }
+        .title-h1 {
+            font-size: clamp(48px, 9vw, 92px);
+            font-weight: 900;
+            color: #1A1A1A;
+            text-align: center;
+            line-height: 1.2;
+            letter-spacing: -1.5px;
+        }
+
+        /* ── QUESTION ── */
+        .question-area {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 12px 32px;
+            gap: 16px;
+            min-height: 0;
+        }
+        .q-prefix {
+            font-size: clamp(68px, 11vw, 116px);
+            font-weight: 900;
+            color: #1A1A1A;
+            line-height: 1;
+            flex-shrink: 0;
+            align-self: flex-start;
+            padding-top: 4px;
+        }
+        .q-text {
+            font-size: clamp(28px, 4.8vw, 58px);
+            font-weight: 900;
+            color: #1A1A1A;
+            line-height: 1.4;
+            letter-spacing: -0.5px;
+        }
+        .ox-row {
+            display: flex;
+            gap: 16px;
+            padding: 8px 32px 28px;
+            flex-shrink: 0;
+        }
+        .ox-btn {
+            flex: 1;
+            height: clamp(100px, 18vh, 168px);
+            border: 5px solid #1A1A1A;
+            background: transparent;
+            border-radius: 22px;
+            font-size: clamp(52px, 8.5vw, 92px);
+            font-weight: 900;
+            color: #1A1A1A;
+            font-family: inherit;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            touch-action: manipulation;
+            transition: transform 0.12s ease, background-color 0.1s ease;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        .ox-btn:active { transform: scale(0.90); background: rgba(0,0,0,0.07); }
+        .ox-btn:disabled { opacity: 0.35; cursor: default; }
+
+        /* ── ANSWER SCREEN ── */
+        .answer-area {
+            flex: 1;
+            display: flex;
+            padding: 16px 32px;
+            gap: 22px;
+            min-height: 0;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .a-prefix {
+            font-size: clamp(68px, 11vw, 116px);
+            font-weight: 900;
+            color: #1A1A1A;
+            line-height: 1;
+            flex-shrink: 0;
+            align-self: flex-start;
+            padding-top: 4px;
+        }
+        .answer-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-width: 0;
+        }
+        .verdict-badge {
+            display: inline-flex;
+            align-items: center;
+            font-size: clamp(17px, 2.8vw, 26px);
+            font-weight: 900;
+            padding: 7px 20px;
+            border-radius: 10px;
+            width: fit-content;
+        }
+        .v-correct { background: #1A1A1A; color: #FFEB00; }
+        .v-wrong   { background: #E8572E; color: #fff; }
+        .ans-char {
+            font-size: clamp(62px, 10.5vw, 112px);
+            font-weight: 900;
+            color: #1A1A1A;
+            line-height: 1;
+        }
+        .ans-title-text {
+            font-size: clamp(21px, 3.5vw, 38px);
+            font-weight: 900;
+            color: #1A1A1A;
+            line-height: 1.45;
+        }
+        .ans-body-text {
+            font-size: clamp(14px, 2.1vw, 20px);
+            color: #1A1A1A;
+            line-height: 1.75;
+            font-weight: 400;
+        }
+        .ans-imgs {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 4px;
+        }
+        .ans-imgs img {
+            flex: 1;
+            min-width: 100px;
+            max-height: clamp(100px, 19vh, 210px);
+            border-radius: 10px;
+            object-fit: contain;
+            object-position: left top;
+        }
+
+        /* ── CTA BUTTON ── */
+        .cta-btn {
+            flex-shrink: 0;
+            margin: 0 32px 28px;
+            padding: 20px;
+            background: #1A1A1A;
+            color: #FFEB00;
+            border: none;
+            border-radius: 16px;
+            font-size: clamp(18px, 2.8vw, 26px);
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            touch-action: manipulation;
+            transition: transform 0.1s;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        .cta-btn:active { transform: scale(0.97); }
+    </style>
+</head>
+<body>
+
+<canvas id="confetti-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:100;"></canvas>
+
+<!-- ══ TITLE SCREEN ══ -->
+<div class="screen active" id="scr-title">
+    <header class="site-header">
+        <span class="header-brand">kakao <b>OX 퀴즈</b></span>
+    </header>
+    <div class="header-divider"></div>
+    <div class="title-content">
+        <div class="title-h1">카카오<br>접근성 퀴즈</div>
+    </div>
+    <button class="cta-btn" onclick="startQuiz()">퀴즈 시작하기</button>
+</div>
+
+<!-- ══ QUESTION SCREEN ══ -->
+<div class="screen" id="scr-question">
+    <header class="site-header">
+        <span class="header-brand">kakao <b>OX 퀴즈</b></span>
+        <button class="home-btn" onclick="goHome()" aria-label="홈으로">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="#1A1A1A" aria-hidden="true">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+            </svg>
+        </button>
+    </header>
+    <div class="header-divider"></div>
+    <div class="question-area">
+        <div class="q-prefix">Q.</div>
+        <div class="q-text" id="q-text"></div>
+    </div>
+    <div class="ox-row">
+        <button class="ox-btn" id="btn-o" onclick="pick('O')">O</button>
+        <button class="ox-btn" id="btn-x" onclick="pick('X')">X</button>
+    </div>
+</div>
+
+<!-- ══ ANSWER SCREEN ══ -->
+<div class="screen" id="scr-answer">
+    <header class="site-header">
+        <span class="header-brand">kakao <b>OX 퀴즈</b></span>
+        <button class="home-btn" onclick="goHome()" aria-label="홈으로">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="#1A1A1A" aria-hidden="true">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+            </svg>
+        </button>
+    </header>
+    <div class="header-divider"></div>
+    <div class="answer-area">
+        <div class="a-prefix">A.</div>
+        <div class="answer-content">
+            <span class="verdict-badge" id="verdict"></span>
+            <div class="ans-char" id="ans-char">O</div>
+            <div class="ans-title-text" id="ans-title"></div>
+            <div class="ans-body-text" id="ans-body"></div>
+            <div class="ans-imgs" id="ans-imgs"></div>
+        </div>
+    </div>
+    <button class="cta-btn" id="next-btn" onclick="nextQuestion()">다음 문제 →</button>
+</div>
+
+<script>
+    const QUIZ = [
+        {
+            q: "시각장애인도 카카오톡을 이용할 수 있다.",
+            a: "O",
+            title: "시각장애인도 카카오톡의 메시지를 소리로 들으면서 지인과 소통할 수 있다.",
+            body: "카카오톡은 앱 개발 초기부터 시각장애인이 보이스오버를 사용해 메시지를 주고받을 수 있도록 접근성을 보장해오고 있다. 지난 2016년부터는 정기 업데이트마다 접근성 QA를 진행하면서 접근성을 유지하고 고도화하기 위해 노력하고 있다.",
+            imgs: []
+        },
+        {
+            q: "카카오톡 이모티콘은 시각장애인이 사용할 수 있다.",
+            a: "O",
+            title: "시각장애인도 카카오톡의 이모티콘을 소리로 들으면서 의미를 이해할 수 있다.",
+            body: "카카오톡 이모티콘 50만개에 3년간 대체텍스트 입력 작업을 진행했습니다. 대체텍스트는 이모티콘 플러스의 추천 기능에서도 활용됩니다.",
+            imgs: ["img/q2_img2.jpeg", "img/q2_img3.jpeg"]
+        },
+        {
+            q: "카카오T의 택시 호출 기능은 시각장애인도 이용할 수 있다.",
+            a: "O",
+            title: "카카오T의 택시 호출 기능은 시각장애인도 이용할 수 있다.",
+            body: "카카오T의 택시 서비스는 시각장애인이 스크린리더(보이스오버, 톡백)를 통해 소리로 듣고 이용할 수 있도록 웹/앱 접근성을 고려해서 개발되었습니다.",
+            imgs: []
+        },
+        {
+            q: "카카오에는 '디지털 접근성 책임자'가 있다.",
+            a: "O",
+            title: "디지털 접근성 강화를 위해 배리어프리 이니셔티브를 선언하고 국내 IT 업계 최초로 '디지털 접근성 책임자'를 선임했다.",
+            body: "카카오는 지난 2022년 디지털접근성책임자를 선임했으며 카카오와 계열사의 접근성을 높이기 위한 역할을 담당한다. 장애인, 노약자 등 모든 사람이 소외되지 않고 카카오의 서비스를 동등하게 누릴 수 있도록 하기 위한 노력을 기울이고 있다.",
+            imgs: ["img/q4_img2.jpeg"]
+        },
+        {
+            q: "카카오는 국내 기업 최초로 '디지털 접근성' 전담부서를 만들었다.",
+            a: "O",
+            title: "카카오는 지난 2013년부터 접근성 전담 부서를 운영하고 있다.",
+            body: "카카오 내부에는 '디지털 접근성'이라는 접근성 전담 조직이 운영되고 있다. 또한, 자회사형 장애인 표준사업장인 '링키지랩'도 별도로 운영한다. 이 조직은 지난 2013년 운영을 시작했으며, 주요 서비스, 플랫폼, 기술과 관련된 다양한 접근성 업무를 수행하고 있다. 링키지랩의 접근성팀은 장애인과 비장애인이 함께 협업하고 있으며, 사용자 테스터, 웹 접근성 컨설턴트 등의 전문가로 구성되어 있다.",
+            imgs: []
+        },
+        {
+            q: "카카오톡은 저시력 시각장애인을 위한 고대비 테마를 제공한다.",
+            a: "O",
+            title: "카카오톡 iOS / Android는 고대비 테마를 제공하여 저시력 시각장애인, 고령자 등의 접근성을 높이고 있다.",
+            body: "고대비 테마를 통해 텍스트와 배경의 명도 대비를 높여 저시력자도 더욱 쉽게 카카오톡을 이용할 수 있습니다.",
+            imgs: ["img/q6_img2.jpeg"]
+        },
+        {
+            q: "카카오톡의 송금 기능은 시각장애인도 이용할 수 있다.",
+            a: "O",
+            title: "카카오톡의 송금 기능은 시각장애인도 이용할 수 있다.",
+            body: "카카오톡과 카카오페이의 송금 기능은 시각장애인이 스크린리더(보이스오버, 톡백)를 통해 소리로 듣고 이용할 수 있도록 웹/앱 접근성을 고려해서 개발되었습니다.",
+            imgs: ["img/q7_img2.png"]
+        },
+        {
+            q: "장애인 당사자가 직접 카카오 접근성 개선에 참여할 수 있다.",
+            a: "O",
+            title: "카카오 접근성을 위해 장애인으로 구성된 서포터즈가 활동하고 있다.",
+            body: "다양한 유형의 장애 당사자가 제보한 접근성 이슈들이 서비스 부서에 전달되고 반영되고 있습니다.",
+            imgs: ["img/q8_img2.jpeg"]
+        },
+        {
+            q: "카카오 고객센터에는 장애인을 위한 접근성 문의 메뉴가 별도로 있다.",
+            a: "O",
+            title: "카카오 고객센터에는 장애인을 위한 접근성 문의 메뉴가 별도로 있다.",
+            body: "카카오 고객센터 웹사이트 첫 화면의 '카카오 접근성' 메뉴를 통해 웹/앱 접근성 관련 불편사항을 접수할 수 있습니다.",
+            imgs: ["img/q9_img2.png"]
+        }
+    ];
+
+    let currentIdx = 0;
+    let score = 0;
+
+    function showScreen(id) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+    }
+
+    function startQuiz() {
+        currentIdx = 0;
+        score = 0;
+        loadQuestion();
+        showScreen('scr-question');
+    }
+
+    function goHome() {
+        currentIdx = 0;
+        score = 0;
+        showScreen('scr-title');
+    }
+
+    function loadQuestion() {
+        document.getElementById('q-text').textContent = QUIZ[currentIdx].q;
+        document.getElementById('btn-o').disabled = false;
+        document.getElementById('btn-x').disabled = false;
+    }
+
+    function pick(choice) {
+        document.getElementById('btn-o').disabled = true;
+        document.getElementById('btn-x').disabled = true;
+
+        const q = QUIZ[currentIdx];
+        const isCorrect = (choice === q.a);
+        if (isCorrect) { score++; launchConfetti(); }
+
+        const v = document.getElementById('verdict');
+        v.textContent = isCorrect ? '✓ 정답!' : '✗ 오답';
+        v.className = 'verdict-badge ' + (isCorrect ? 'v-correct' : 'v-wrong');
+
+        document.getElementById('ans-char').textContent = q.a;
+        document.getElementById('ans-title').textContent = q.title;
+        document.getElementById('ans-body').textContent = q.body;
+
+        const imgsEl = document.getElementById('ans-imgs');
+        if (q.imgs && q.imgs.length) {
+            imgsEl.innerHTML = q.imgs.map(src => '<img src="' + src + '" alt="">').join('');
+            imgsEl.style.display = 'flex';
+        } else {
+            imgsEl.innerHTML = '';
+            imgsEl.style.display = 'none';
+        }
+
+        document.getElementById('next-btn').textContent = '다음 문제 →';
+
+        showScreen('scr-answer');
+    }
+
+    function nextQuestion() {
+        currentIdx = (currentIdx + 1) % QUIZ.length;
+        loadQuestion();
+        showScreen('scr-question');
+    }
+
+    /* ── Fireworks confetti ── */
+    let _confAnim = null;
+    let _confParts = [];
+
+    function launchConfetti() {
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        if (_confAnim) { cancelAnimationFrame(_confAnim); _confAnim = null; }
+        _confParts = [];
+
+        const COLORS = ['#FFEB00', '#E8572E', '#ffffff', '#1A1A1A', '#FF9500', '#FFD700', '#FF6B6B'];
+
+        function burst(ox, oy) {
+            for (let i = 0; i < 100; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 15 + 3;
+                _confParts.push({
+                    x: ox, y: oy,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed - 5,
+                    color: COLORS[Math.floor(Math.random() * COLORS.length)],
+                    w: Math.random() * 11 + 5,
+                    h: Math.random() * 6 + 3,
+                    r: Math.random() * Math.PI * 2,
+                    rv: (Math.random() - 0.5) * 0.28,
+                    life: 1,
+                    decay: Math.random() * 0.013 + 0.007,
+                    g: 0.3
+                });
+            }
+        }
+
+        const cx = canvas.width / 2;
+        const cy = canvas.height * 0.42;
+        burst(cx, cy);
+        setTimeout(() => burst(cx * 0.42, cy * 0.92), 180);
+        setTimeout(() => burst(cx * 1.58, cy * 0.88), 330);
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            _confParts = _confParts.filter(p => p.life > 0.02);
+            for (const p of _confParts) {
+                p.vx *= 0.985;
+                p.vy += p.g;
+                p.x += p.vx;
+                p.y += p.vy;
+                p.r += p.rv;
+                p.life -= p.decay;
+                ctx.save();
+                ctx.globalAlpha = Math.min(1, p.life * 1.6);
+                ctx.fillStyle = p.color;
+                ctx.translate(p.x, p.y);
+                ctx.rotate(p.r);
+                ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+                ctx.restore();
+            }
+            if (_confParts.length) {
+                _confAnim = requestAnimationFrame(draw);
+            } else {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                _confAnim = null;
+            }
+        }
+        draw();
+    }
+</script>
+
+</body>
+</html>
