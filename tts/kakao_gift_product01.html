@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=375, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>나이키 코트 드라이 핏 솔리드 폴로 티 - 카카오 선물하기</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    body {
+      font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+      background: #fff;
+      /* max-width: 375px; */
+      margin: 0 auto;
+      color: #111;
+      font-size: 14px;
+      overflow-x: hidden;
+    }
+
+    /* ── Header ── */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 44px;
+      padding: 0 12px;
+      background: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .header-left { display: flex; align-items: center; gap: 4px; }
+    .header-center {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 16px;
+      font-weight: 600;
+      color: #111;
+    }
+    .header-center img { height: 18px; }
+    .icon-btn {
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      background: none; border: none; cursor: pointer;
+    }
+    .icon-btn svg { width: 22px; height: 22px; }
+
+    /* ── Product Image ── */
+    .product-image-wrap {
+      position: relative;
+      width: 375px;
+      height: 375px;
+      background: #f5f5f5;
+    }
+    .product-image-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      
+    }
+    .coupon-badge {
+      position: absolute;
+      top: 10px; right: 10px;
+      z-index: 2;
+    }
+    .coupon-badge img { height: 30px; }
+
+    /* ── Brand Row ── */
+    .brand-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 16px 6px;
+    }
+    .brand-icon {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 1px solid #eee;
+    }
+    .brand-icon img { width: 100%; height: 100%; object-fit: cover; }
+    .brand-name {
+      font-size: 13px;
+      color: #555;
+      display: flex; align-items: center; gap: 2px;
+    }
+    .brand-arrow { font-size: 11px; color: #999; }
+
+    /* ── Product Info ── */
+    .product-info { padding: 0 16px 8px; }
+    .product-title {
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 1.5;
+      color: #111;
+      margin-bottom: 6px;
+    }
+    .review-link {
+      font-size: 12px;
+      color: #888;
+      text-decoration: none;
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+    .review-link:hover { text-decoration: underline; }
+
+    /* ── Price Section ── */
+    .price-section { padding: 6px 16px 10px; }
+    .original-price {
+      font-size: 13px;
+      color: #999;
+      text-decoration: line-through;
+      margin-bottom: 2px;
+    }
+    .price-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .price-label { font-size: 13px; color: #555; }
+    .price-value {
+      font-size: 18px;
+      font-weight: 700;
+      color: #111;
+    }
+    .max-price-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .max-price-label { font-size: 13px; color: #555; }
+    .max-price-value {
+      font-size: 18px;
+      font-weight: 700;
+      color: #e8440a;
+    }
+    .coupon-btn {
+      border: 1px solid #e8440a;
+      color: #e8440a;
+      background: #fff;
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: 3px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .cheapest-note {
+      font-size: 12px;
+      color: #888;
+      margin-top: 5px;
+      display: flex; align-items: center; gap: 4px;
+    }
+    .cheapest-note::before {
+      content: '';
+      display: inline-block;
+      width: 14px; height: 14px;
+      background: #f9e000;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── Delivery Info ── */
+    .delivery-box {
+      margin: 0 16px 10px;
+      background: #f8f8f8;
+      border-radius: 6px;
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .delivery-info {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: #555;
+    }
+    .delivery-info svg { width: 16px; height: 16px; color: #999; }
+    .delivery-badge {
+      background: #eee;
+      color: #555;
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: 2px;
+      font-weight: 500;
+    }
+    .delivery-detail {
+      font-size: 12px;
+      color: #888;
+      display: flex; align-items: center; gap: 2px;
+      cursor: pointer;
+    }
+
+    /* ── Action Buttons ── */
+    .action-row {
+      display: flex;
+      align-items: center;
+      padding: 10px 16px 12px;
+      gap: 8px;
+      border-bottom: 8px solid #f5f5f5;
+    }
+    .action-icon-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      padding: 0 4px;
+    }
+    .action-icon-btn svg { width: 22px; height: 22px; color: #666; }
+    .action-icon-btn span { font-size: 10px; color: #888; }
+    .action-btns {
+      display: flex;
+      flex: 1;
+      gap: 6px;
+    }
+    .btn-gift-me {
+      flex: 1;
+      height: 44px;
+      background: #fff;
+      border: 1.5px solid #f9e000;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #111;
+      cursor: pointer;
+    }
+    .btn-gift {
+      flex: 1;
+      height: 44px;
+      background: #f9e000;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #111;
+      cursor: pointer;
+    }
+
+    /* ── Options Section ── */
+    .options-section { padding: 0 0 12px; }
+    .option-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 13px 16px;
+      border-bottom: 1px solid #f0f0f0;
+      cursor: pointer;
+    }
+    .option-label { font-size: 14px; color: #555; }
+    .option-value { font-size: 14px; color: #111; }
+    .option-right {
+      display: flex; align-items: center; gap: 6px;
+    }
+    .option-chevron { color: #bbb; font-size: 16px; }
+
+    .option-btns {
+      display: flex;
+      gap: 8px;
+      padding: 10px 16px 0;
+    }
+    .btn-add-cart {
+      flex: 1;
+      height: 44px;
+      border: 1.5px solid #ddd;
+      background: #fff;
+      border-radius: 6px;
+      font-size: 14px;
+      color: #555;
+      cursor: pointer;
+    }
+    .btn-gift2 {
+      flex: 1;
+      height: 44px;
+      background: #f9e000;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #111;
+      cursor: pointer;
+    }
+
+    /* ── Divider ── */
+    .section-divider { height: 8px; background: #f5f5f5; }
+
+    /* ── Recommended Products ── */
+    .recommend-section { padding: 16px 0 12px; }
+    .recommend-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px 12px;
+    }
+    .recommend-title { font-size: 15px; font-weight: 700; color: #111; }
+    .recommend-tabs {
+      display: flex;
+      gap: 0;
+      padding: 0 16px 12px;
+    }
+    .recommend-tab {
+      font-size: 13px;
+      padding: 4px 12px;
+      border: 1px solid #ddd;
+      background: #fff;
+      color: #888;
+      cursor: pointer;
+      border-radius: 0;
+    }
+    .recommend-tab:first-child { border-radius: 4px 0 0 4px; }
+    .recommend-tab:last-child { border-radius: 0 4px 4px 0; border-left: none; }
+    .recommend-tab.active { background: #111; color: #fff; border-color: #111; }
+    .product-scroll {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 0 16px;
+      scrollbar-width: none;
+    }
+    .product-scroll::-webkit-scrollbar { display: none; }
+    .product-card {
+      flex: 0 0 120px;
+      cursor: pointer;
+    }
+    .product-card-img {
+      width: 120px; height: 120px;
+      background: #f5f5f5;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 7px;
+      position: relative;
+    }
+    .product-card-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .wish-icon {
+      position: absolute;
+      bottom: 6px; right: 6px;
+      background: rgba(255,255,255,0.9);
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .wish-count {
+      font-size: 10px;
+      color: #999;
+      margin-bottom: 3px;
+    }
+    .product-card-name {
+      font-size: 12px;
+      color: #111;
+      line-height: 1.4;
+      margin-bottom: 3px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .product-card-discount { font-size: 11px; color: #e8440a; font-weight: 600; }
+    .product-card-price { font-size: 13px; font-weight: 700; color: #111; }
+    .product-card-max { font-size: 11px; color: #e8440a; }
+
+    /* ── Notice ── */
+    .notice-section {
+      padding: 14px 16px;
+      border-top: 1px solid #f0f0f0;
+      border-bottom: 8px solid #f5f5f5;
+    }
+    .notice-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      margin-bottom: 8px;
+    }
+    .notice-title { font-size: 14px; font-weight: 600; color: #111; }
+    .notice-chevron { color: #bbb; font-size: 14px; }
+    .notice-content {
+      font-size: 12px;
+      color: #888;
+      line-height: 1.6;
+    }
+
+    /* ── Tab Nav ── */
+    .tab-nav {
+      display: flex;
+      border-bottom: 2px solid #f0f0f0;
+      position: sticky;
+      top: 44px;
+      background: #fff;
+      z-index: 99;
+    }
+    .tab-item {
+      flex: 1;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #888;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .tab-item.active {
+      color: #111;
+      border-bottom-color: #111;
+      font-weight: 700;
+    }
+    .tab-badge {
+      background: #f9e000;
+      color: #111;
+      font-size: 10px;
+      font-weight: 700;
+      border-radius: 10px;
+      padding: 1px 5px;
+      margin-left: 3px;
+    }
+
+    /* ── Product Description ── */
+    .product-desc {
+      padding: 20px 16px;
+      min-height: 200px;
+    }
+
+    /* ── 상품설명 더보기 ── */
+    .desc-content-wrap {
+      position: relative;
+      max-height: 500px;
+      overflow: hidden;
+    }
+    .desc-content-wrap.expanded {
+      max-height: none;
+    }
+    .desc-fade {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 130px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, #fff 100%);
+      pointer-events: none;
+    }
+    .desc-content-wrap.expanded .desc-fade {
+      display: none;
+    }
+    .area_morebtn {
+      display: flex;
+      justify-content: center;
+      padding: 12px 0 20px;
+      background: #fff;
+    }
+    .btn_more {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 40px;
+      padding: 0 18px;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      background: #fff;
+      font-size: 13px;
+      color: #555;
+      cursor: pointer;
+      letter-spacing: -0.2px;
+    }
+    .btn_more:active { background: #f5f5f5; }
+    .ico_arr {
+      display: inline-block;
+      width: 0; height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 5px solid #999;
+      margin-top: 1px;
+    }
+    .desc-banner {
+      width: 100%;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+    .desc-banner img { width: 100%; display: block; }
+    .desc-brand-banner {
+      width: 100%;
+      margin-bottom: 16px;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .desc-brand-banner img { width: 100%; display: block; }
+    .desc-product-info {
+      text-align: center;
+      padding: 16px 0;
+    }
+    .desc-product-subtitle { font-size: 12px; color: #999; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .desc-product-name { font-size: 17px; font-weight: 700; color: #111; margin-bottom: 4px; }
+    .desc-product-code { font-size: 12px; color: #aaa; }
+    .desc-main-img {
+      width: 100%;
+      background: #f5f5f5;
+      min-height: 300px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .desc-main-img img { width: 100%; display: block; }
+
+    /* ── Screen reader only ── */
+    .desc-tts {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* ── Bottom Bar ── */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0; left: 0;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px 20px;
+      background: #fff;
+      border-top: 1px solid #eee;
+      z-index: 200;
+    }
+    .bottom-icon-btns { display: flex; gap: 4px; }
+    .bottom-icon-btn {
+      width: 44px; height: 44px;
+      display: flex; align-items: center; justify-content: center;
+      background: #fff;
+      border: 1.5px solid #ddd;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .bottom-icon-btn svg { width: 20px; height: 20px; color: #555; }
+    .bottom-btns { display: flex; flex: 1; gap: 6px; }
+    .btn-bottom-me {
+      flex: 1; height: 44px;
+      border: 1.5px solid #f9e000;
+      background: #fff;
+      border-radius: 6px;
+      font-size: 14px; font-weight: 600; color: #111;
+      cursor: pointer;
+    }
+    .btn-bottom-gift {
+      flex: 1; height: 44px;
+      background: #f9e000;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px; font-weight: 700; color: #111;
+      cursor: pointer;
+    }
+
+    /* spacer for fixed bottom bar */
+    .bottom-spacer { height: 80px; }
+
+    /* scrollbar */
+    ::-webkit-scrollbar { width: 0; }
+
+    ._editor_contents img {
+    max-width: 100% !important;
+    height: auto !important;
+    text-align: center;
+  }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-left">
+    <button class="icon-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+        <path d="M15 19l-7-7 7-7"/>
+      </svg>
+    </button>
+    <button class="icon-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/>
+        <path d="M9 21V12h6v9"/>
+      </svg>
+    </button>
+  </div>
+  <div class="header-center">선물하기</div>
+  <button class="icon-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+      <circle cx="11" cy="11" r="7"/>
+      <path d="M21 21l-4.35-4.35"/>
+    </svg>
+  </button>
+</header>
+
+<!-- Product Image -->
+<div class="product-image-wrap">
+  <img
+    src="https://img1.kakaocdn.net/thumb/C375x375@2x.fwebp.q82/?fname=https%3A%2F%2Fst.kakaocdn.net%2Fproduct%2Fgift%2Fproduct%2FHwZkAUJyM1ORu7sAgpUaHw%2FiDp5jT8Setwh53CNEh9Edz0sUbioG37v6v-mHUzHikk.jpg"
+    alt="나이키 코트 드라이 핏 솔리드 폴로 티"
+  />
+  <div class="coupon-badge">
+    <img
+      src="https://st.kakaocdn.net/gift/gift-applied/MgPhv/20260616_TZPQQJLPLCHA4434270024965155304.png"
+      alt="쿠폰"
+    />
+  </div>
+</div>
+
+<!-- Brand -->
+<div class="brand-row">
+  <div class="brand-icon">
+    <img
+      src="https://img1.kakaocdn.net/thumb/C30x30@2x.fwebp.q82/?fname=https%3A%2F%2Fst.kakaocdn.net%2Fproduct%2Fgift%2Fgift_brand%2F20200331035121_d72ea50ea05041adb1c759f0f3990aa3"
+      alt="나이키"
+    />
+  </div>
+  <a href class="brand-name">나이키 <span class="brand-arrow">›</span></a>
+</div>
+
+<!-- Product Info -->
+<div class="product-info">
+  <div class="product-title">나이키 코트 드라이 핏 솔리드 폴로 티 (DH0858-010) 반팔티 남성 PK티 카라티</div>
+  <a class="review-link">10건의 선물후기</a>
+</div>
+
+<!-- Price -->
+<div class="price-section">
+  <div class="price-row">
+    <span class="price-label">판매가</span>
+    <span class="price-value">43,900원</span>
+  </div>
+  <div class="max-price-row">
+    <span class="max-price-label">최대혜택가</span>
+    <span class="max-price-value">36,810원</span>
+    <button class="coupon-btn" onclick="alert('쿠폰을 받으세요!')">쿠폰받기</button>
+  </div>
+  <div class="cheapest-note">나에게 선물 시 가장 저렴해요</div>
+</div>
+
+<!-- Delivery -->
+<div class="delivery-box">
+  <div class="delivery-info">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <rect x="1" y="3" width="15" height="13" rx="1"/>
+      <path d="M16 8h4l3 5v3h-7V8z"/>
+      <circle cx="5.5" cy="18.5" r="2.5"/>
+      <circle cx="18.5" cy="18.5" r="2.5"/>
+    </svg>
+    <span class="delivery-badge">배송비 포함</span>
+    <span style="font-size:12px;color:#aaa;">도서산간 추가 배송비 안내</span>
+  </div>
+  <span class="delivery-detail">
+    자세히 보기 <span style="color:#bbb;">›</span>
+  </span>
+</div>
+
+<!-- Same-day shipping banner -->
+    <div class="desc-banner">
+      <img src="https://img1.kakaocdn.net/thumb/R260x42@2x.fwebp.q82/?fname=https%3A%2F%2Ft1.daumcdn.net%2Fgift%2Fmarketing-banner%2Fimage%2F20260617_M_14863233177679209189.jpg" alt="오늘의 할인 혜택">
+    </div>
+
+
+<div class="section-divider"></div>
+
+<!-- Recommended Products -->
+<div class="recommend-section">
+  <div class="recommend-header">
+    <span class="recommend-title">이 브랜드의 추천 상품</span>
+  </div>
+  <div class="recommend-tabs">
+    <button class="recommend-tab active">인기상품</button>
+    <button class="recommend-tab">신상품</button>
+  </div>
+  <div class="product-scroll">
+
+    <div class="product-card">
+      <div class="product-card-img">
+        <img src="https://img1.kakaocdn.net/thumb/C128x128@2x.fwebp.q82/?fname=https%3A%2F%2Fst.kakaocdn.net%2Fproduct%2Fgift%2Fproduct%2F20240315130939_8c51c27a5aca4aebbc7e0f3e23e81fa7.jpg" alt="나이키 드라이핏 스우시 반팔티+반바지">
+        <div class="wish-icon">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </div>
+      </div>
+      <div class="wish-count">3.4만</div>
+      <div class="product-card-name">(세트상품)나이키 드라이핏 스우시 반팔티+반바지</div>
+      <div class="product-card-price">48,900원</div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-card-img">
+        <img src="https://img1.kakaocdn.net/thumb/C128x128@2x.fwebp.q82/?fname=https%3A%2F%2Fst.kakaocdn.net%2Fproduct%2Fgift%2Fproduct%2F20231010124118_e53babb6aea14de5a4d29b19c95d3d5e.jpg" alt="나이키 드라이핏 파크 저지">
+        <div class="wish-icon">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </div>
+      </div>
+      <div class="wish-count">3,141</div>
+      <div class="product-card-name">[1+1/총2개] 나이키 남녀공용 드라이 핏 파크 저지 반팔티 3컬러</div>
+      <div class="product-card-discount">9%</div>
+      <div class="product-card-price">34,900원</div>
+      <div class="product-card-max">최대혜택가 28,710원</div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-card-img">
+        <img src="https://img1.kakaocdn.net/thumb/C128x128@2x.fwebp.q82/?fname=https%3A%2F%2Fst.kakaocdn.net%2Fproduct%2Fgift%2Fproduct%2F20230808152252_c2f9e4abe5a84a9dbc4a95bc3ae92d58.jpg" alt="나이키 드라이핏 스우시 반팔티">
+        <div class="wish-icon">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </div>
+      </div>
+      <div class="wish-count">1.4만</div>
+      <div class="product-card-name">나이키 드라이핏 스우시 반팔티</div>
+      <div class="product-card-price">27,900원</div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-card-img">
+        <img src="https://img1.kakaocdn.net/thumb/C128x128@2x.fwebp.q82/?fname=https%3A%2F%2Fst.kakaocdn.net%2Fproduct%2Fgift%2Fproduct%2F20231215095012_9bd2bc4e5afe4d87b7ea9a00a2f15b5e.jpg" alt="나이키 드라이핏 반팔+반바지 세트">
+        <div class="wish-icon">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </div>
+      </div>
+      <div class="wish-count">3,600</div>
+      <div class="product-card-name">나이키 드라이핏 반팔+반바지 세트 2종 택1 상하의세트</div>
+      <div class="product-card-discount">14%</div>
+      <div class="product-card-price">35,900원</div>
+      <div class="product-card-max">최대혜택가 29,610원</div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-card-img">
+        <img src="https://img1.kakaocdn.net/thumb/C128x128@2x.fwebp.q82/?fname=https%3A%2F%2Fst.kakaocdn.net%2Fproduct%2Fgift%2Fproduct%2F20240220112233_abcd1234.jpg" alt="(1+1)나이키 드라이핏 스우시 반팔티">
+        <div class="wish-icon">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </div>
+      </div>
+      <div class="wish-count">6,668</div>
+      <div class="product-card-name">(1+1)나이키 드라이핏 스우시 반팔티</div>
+      <div class="product-card-price">49,900원</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- Notice -->
+<div class="notice-section">
+  <div class="notice-header">
+    <span class="notice-title">공지사항</span>
+    <span class="notice-chevron">›</span>
+  </div>
+  <div class="notice-content">
+    판매자 공지사항<br>
+    ※교환 접수 시 상세사유 란에 사이즈를 반드시 기재 해주셔야 원활한 처리가 가능합니다.<br>
+    ※교환배송비는 제품 포장시 동봉 또는 안내되는 계좌에 수령자분(선물 받아보신분) 성함으로 입금 부탁드리겠습니다.
+  </div>
+</div>
+
+<!-- Tab Navigation -->
+<div class="tab-nav">
+  <div class="tab-item active" onclick="switchTab(this, 'desc')">상품설명</div>
+  <div class="tab-item" onclick="switchTab(this, 'review')">선물후기 <span class="tab-badge">10</span></div>
+  <div class="tab-item" onclick="switchTab(this, 'detail')">상세정보</div>
+</div>
+
+<!-- Tab Contents -->
+<div id="tab-desc" class="product-desc">
+  <div class="desc-content-wrap" id="desc-content-wrap">
+    
+    <!-- Product description section -->
+    
+    <div htmlimagelazyload="" class="_editor_contents">
+      <div class="desc-tts">
+        나이키 골프 드라이핏 솔리드 폴로 반팔 티셔츠 검정색 제품이다. 카라와 로고 자수, 원단 질감과 소매 마감 등 디테일이 특징이며 정면·측면·후면 착용 기준의 실루엣이 있다. 사이즈 가이드 표와 치수 측정 방식이 있으며 소재·색상·제조 관련 정보와 구매 전 확인사항이 있다.평일(월~금) 오후 2시 30분 이전 결제 확인 건은 당일 출고된다. 당일 출고 상품은 대부분(90% 이상) 다음 날 수령이 가능하다. 출고되는 상품은 포장부터 발송까지 전 과정이 CCTV로 녹화된다.상품 수령 후 7일 이내 교환·반품(환불) 신청이 가능하다. 제품 사용, 택 제거, 정품 박스 손상 등으로 상품 가치가 훼손된 경우 교환·반품이 불가하다. 사이즈 교환이나 단순 변심은 왕복 배송비를 고객이 부담하며, 제품 하자나 오배송은 판매자가 부담한다.교환·반품은 구매 사이트에서 접수한 뒤 왕복 배송비 6,000원을 동봉해 처음 받은 상태 그대로 이중 포장하여 지정 택배로 발송해야 한다. 신발 박스에 직접 테이핑하거나 송장을 부착하는 등 정품 박스를 훼손하면 처리되지 않을 수 있다. 협력 택배사 및 연락처, 교환·반품 주소가 있다.A/S는 판매 제품이 정품인 경우 일부 국내 정식 유통 제품은 가능하나 병행수입 등은 불가할 수 있다. A/S 접수 시 왕복 배송비 6,000원을 동봉해야 하며 항목에 따라 비용이 발생할 수 있다. 처리 기간은 약 3주 정도 소요될 수 있다.평일 하루 2회 발송 기준으로 오후 9시 30분까지 확인된 주문은 당일 발송되며 이후 주문은 다음 날 발송된다. 발송 전에는 사이트를 통해 주문 취소가 가능하다. 한정 수량으로 품절될 수 있으며 조건에 따라 묶음배송이 자동 적용될 수 있다.
+      </div>
+      <p><img src="https://img1.kakaocdn.net/thumb/R360x0@2x.fwebp.q82/?fname=https%3A%2F%2Fst.kakaocdn.net%2Fproduct%2Fgift%2Feditor%2F20220307094012_3292ea68419c4541ba9781e3b608cc46.jpg" data-original-src="https://st.kakaocdn.net/product/gift/editor/20220307094012_3292ea68419c4541ba9781e3b608cc46.jpg" data-resize-src="https://img1.kakaocdn.net/thumb/R360x0@2x.fwebp.q82/?fname=https%3A%2F%2Fst.kakaocdn.net%2Fproduct%2Fgift%2Feditor%2F20220307094012_3292ea68419c4541ba9781e3b608cc46.jpg" data-is-loaded="true" alt=""></p>
+
+<p><img src="https://img1.kakaocdn.net/thumb/R360x0@2x.fwebp.q82/?fname=https%3A%2F%2Fst.kakaocdn.net%2Fproduct%2Fgift%2Fproduct%2FHwZkAUJyM1ORu7sAgpUaHw%2FoEu3uzpMGfOQ9sA8oZSsX8NibzAlivBPyZNT9GCAsHI.jpg" data-original-src="https://st.kakaocdn.net/product/gift/product/HwZkAUJyM1ORu7sAgpUaHw/oEu3uzpMGfOQ9sA8oZSsX8NibzAlivBPyZNT9GCAsHI.jpg" data-resize-src="https://img1.kakaocdn.net/thumb/R360x0@2x.fwebp.q82/?fname=https%3A%2F%2Fst.kakaocdn.net%2Fproduct%2Fgift%2Fproduct%2FHwZkAUJyM1ORu7sAgpUaHw%2FoEu3uzpMGfOQ9sA8oZSsX8NibzAlivBPyZNT9GCAsHI.jpg" data-is-loaded="true" aria-hidden="true" alt=""></p>
+
+<p><img src="https://st.kakaocdn.net/commerce_ui/static/gift/imgs/1px.png" data-original-src="https://st.kakaocdn.net/product/gift/editor/20220307094016_37c832041bd04280b3855cc35202c02f.jpg" data-resize-src="https://img1.kakaocdn.net/thumb/R360x0@2x.fwebp.q82/?fname=https%3A%2F%2Fst.kakaocdn.net%2Fproduct%2Fgift%2Feditor%2F20220307094016_37c832041bd04280b3855cc35202c02f.jpg" data-is-loaded="false" aria-hidden="true" alt=""></p></div>    <div class="desc-fade"></div>
+  </div>
+  <div class="area_morebtn" id="desc-morebtn">
+    <button type="button" class="btn_more" onclick="expandDesc()">
+      상품설명 더보기
+      <span class="ico_arr"></span>
+    </button>
+  </div>
+</div>
+
+<div id="tab-review" class="product-desc" style="display:none;">
+  <p style="text-align:center;color:#888;padding:40px 0;font-size:14px;">선물후기 10건</p>
+  <!-- Review placeholder -->
+  <div style="border:1px solid #f0f0f0;border-radius:8px;padding:16px;margin-bottom:10px;">
+    <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+      <span style="font-size:13px;font-weight:600;color:#111;">선물받은 분이 좋아했어요!</span>
+      <span style="font-size:11px;color:#aaa;">2024.03</span>
+    </div>
+    <div style="font-size:13px;color:#555;line-height:1.6;">사이즈가 생각보다 크게 나와서 한 사이즈 작게 주문했어요. 품질은 나이키답게 좋습니다.</div>
+    <div style="margin-top:8px;font-size:12px;color:#aaa;">⭐⭐⭐⭐⭐</div>
+  </div>
+</div>
+
+<div id="tab-detail" class="product-desc" style="display:none;">
+  <p style="text-align:center;color:#888;padding:40px 0;font-size:14px;">상세 정보를 불러오는 중...</p>
+</div>
+
+<div class="bottom-spacer"></div>
+
+<!-- Bottom Bar -->
+<div class="bottom-bar">
+  <div class="bottom-icon-btns">
+    <button class="bottom-icon-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+      </svg>
+    </button>
+    <button class="bottom-icon-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+      </svg>
+    </button>
+  </div>
+  <div class="bottom-btns">
+    <button class="btn-bottom-me">나에게 선물</button>
+    <button class="btn-bottom-gift">선물하기</button>
+  </div>
+</div>
+
+<script>
+  function expandDesc() {
+    document.getElementById('desc-content-wrap').classList.add('expanded');
+    document.getElementById('desc-morebtn').style.display = 'none';
+  }
+
+  function switchTab(el, id) {
+    document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('tab-desc').style.display = 'none';
+    document.getElementById('tab-review').style.display = 'none';
+    document.getElementById('tab-detail').style.display = 'none';
+    document.getElementById('tab-' + id).style.display = 'block';
+  }
+
+  document.querySelectorAll('.recommend-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.recommend-tab').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
